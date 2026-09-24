@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-cream font-mono text-ink antialiased;
+  overflow-wrap: break-word;
+}
+
+/* Fokus jelas & konsisten (WCAG 2.4.7) */
+:focus-visible {
+  outline: 3px solid #2563EB;
+  outline-offset: 2px;
+}
+
+/* Target sentuh minimum 44×44 px (WCAG 2.5.5) */
+.btn-touch {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Utilitas shadow keras (0 blur, offset solid) */
+.shadow-hard {
+  box-shadow: 6px 6px 0 0 #111111;
+}
+.shadow-hard-sm {
+  box-shadow: 3px 3px 0 0 #111111;
+}
+.shadow-hard-lg {
+  box-shadow: 8px 8px 0 0 #111111;
+}
+
+/* Tekan brutalist: tombol pegas tertekan nyata (tactile press) */
+.brutal-press {
+  @apply transition-all duration-150 ease-out;
+}
+.brutal-press:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 #111111;
+}
+.brutal-press:active {
+  transform: translate(4px, 4px);
+  box-shadow: 1px 1px 0 0 #111111;
+}
+
+/* Marquee horizontal seamless (kanan -> kiri, kecepatan konstan) */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+  will-change: transform;
+}
+.marquee-pause:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+/* Float halus untuk window foto profil */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+.animate-floaty {
+  animation: floaty 6s ease-in-out infinite;
+}
+
+/* Reveal slide-up ringan (fallback CSS, dipakai bila Framer tak perlu) */
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-reveal {
+  animation: revealUp 0.45s cubic-bezier(0, 0, 0.2, 1) both;
+}
+
+/* Hormati preferensi pengguna yang sensitif gerak */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Sembunyikan scrollbar (untuk chips horizontal-scroll mobile) */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
